@@ -51,7 +51,8 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 normalOfMoveDir2 = new Vector3(movDir2.z, movDir2.y, -movDir2.x);
             // bottom.Rotate(normalOfMoveDir2 * Time.deltaTime);
-            bottom.RotateAroundLocal(normalOfMoveDir2, bottomRotation);
+            //normalOfMoveDir2 = Quaternion.AngleAxis(90, Vector3.up) * movDir2;
+            bottom.RotateAround(normalOfMoveDir2, bottomRotation);
            // bottom.RotateAroundLocal(movDir2, 0.01f);
 
             rigidB.velocity = movDir2 * movementSpeed;
