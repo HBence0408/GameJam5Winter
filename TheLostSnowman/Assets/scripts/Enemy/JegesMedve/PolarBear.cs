@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +40,6 @@ public class PolarBear : MonoBehaviour, ISeeker
 
     public void Poll()
     {
-        Debug.Log("unit poll");
         if (!isReady)
         {
             return;
@@ -53,49 +52,36 @@ public class PolarBear : MonoBehaviour, ISeeker
 
     private void FollowPath()
     {
-        Debug.Log("following");
-        Debug.Log(path.Count);
         if (path.Count <= pathIndex)
         {
             followPath = false;
             pathIndex = 0;
-            Debug.Log(path.Last().x + " " + path.Last().y);
+            rb.velocity = Vector3.zero;
             return;
         }
 
-        try
+        Vector3 pos = this.transform.position;
+        Vector3 targetPos = path[pathIndex];
+        targetPos.y = 1;
+        double sqareDistance = (pos.x * pos.x + pos.z * pos.z) - (targetPos.x * targetPos.x + targetPos.z * targetPos.z);
+        if (!(sqareDistance > 4 || sqareDistance < -4))
         {
-            Vector3 pos = this.transform.position;
-            Vector3 targetPos = path[pathIndex];
-            targetPos.y = 1;
-            Debug.Log(pathIndex);
-            double sqareDistance = (pos.x * pos.x + pos.z * pos.z) - (targetPos.x * targetPos.x + targetPos.z * targetPos.z);
-            if (!(sqareDistance > 3 || sqareDistance < -3))
-            {
-                pathIndex++;
-            }
-            Debug.Log(sqareDistance);
-            // itt elég összehasonlításhoz csak a távolság négyzete is ezért a gyökvonást le hagyva annak a számítását le lehet spórolni és jobb lesz a teljesítmény
-            // ide 3d verzio kell, meg lehetne optimalizálni hogy ne move towards legyen
-            //this.transform.position = Vector2.MoveTowards(this.transform.position, path[pathIndex], speed * Time.deltaTime);
-            //this.transform.position = Vector3.MoveTowards(this.transform.position, path[pathIndex], Time.deltaTime);
-            //Vector3 dir = targetPos - pos;
-            // dir.Normalize();
-            // rb.velocity = dir * speed;
-            //  rb.velocity = dir * speed;
-            // rb.AddForce(dir * 100, ForceMode.Force);
-            this.transform.LookAt(new Vector3(path[pathIndex].x, 0.5f, path[pathIndex].z) ) ;
-            Vector3 yLock = this.transform.eulerAngles;
-            Vector3.ProjectOnPlane(yLock, this.transform.up);
-            this.transform.eulerAngles = yLock;
-            rb.velocity = this.transform.forward * speed;
+            pathIndex++;
         }
-        catch (Exception e)
-        {
 
-            Debug.Log("not moving");
-            Debug.Log(e.Message);
-        }
+        // ezzel gyorsan fordul (snap-pel)
+        // this.transform.LookAt(new Vector3(path[pathIndex].x, 0.5f, path[pathIndex].z) );
+        // Vector3 yLock = this.transform.eulerAngles;
+        // Vector3.ProjectOnPlane(yLock, this.transform.up);
+        //this.transform.eulerAngles = yLock;
+
+        //smooth fordulÃ¡s
+        //itt dobÃ¡lhat out of index errort de mÃ©g Ã­gy is fut szÃ³val  Â¯\_(ãƒ„)_/Â¯ (annyira ezÃ©rt nem mert nem Ã¡llnak meg a cÃ©lban)
+        // majd dobok ide egy if-et
+        Quaternion targetRotation = Quaternion.LookRotation(new Vector3(path[pathIndex].x, 0.5f, path[pathIndex].z) - this.transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
+
+        rb.velocity = this.transform.forward * speed;
     }
 
     public void SetActive(bool isActive)
@@ -121,7 +107,6 @@ public class PolarBear : MonoBehaviour, ISeeker
     {
         this.target = target;
     }
-
 
     private void OnDrawGizmos()
     {

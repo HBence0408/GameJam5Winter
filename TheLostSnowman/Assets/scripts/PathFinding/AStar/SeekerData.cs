@@ -24,7 +24,6 @@ public struct SeekerData
 
     public void DeleteScript()
     {
-        Debug.Log("cs set to null");
         unitScript = null;
     }
 
@@ -38,22 +37,6 @@ public struct SeekerData
                 Task pathfiniding = Task.Run(() => PathRequestManager.Instance.FindPath(request));
                 requestPath = false;
             }
-
-        
-                /*
-            try
-            {
-                PathRequest request = new PathRequest(unit.position, target.position, unitScript.OnPathFound);
-                Task pathfiniding = Task.Run(() => PathRequestManager.Instance.FindPath(request));
-                requestPath = false;
-            }
-            catch (NullReferenceException)
-            {
-
-                Debug.Log("null ref: " + name);
-            }
-                */
-           
         }
     }
 

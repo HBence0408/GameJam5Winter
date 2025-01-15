@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-//using Unity.Mathematics;
 using UnityEngine;
 
 public class PathFinderGrid : MonoBehaviour
@@ -32,21 +31,17 @@ public class PathFinderGrid : MonoBehaviour
 
         for (int i = 0; i < Mathf.RoundToInt(gridWorldSize.x); i++)
         {
-            Debug.Log(grid.Length);
             currentCell.z = bottomLeftCell.z;
             for (int j = 0; j < Mathf.RoundToInt(gridWorldSize.y); j++)
             {
                 bool isWalkable = true;
-                // 3d sphere collison kell majd ide
                 Collider[] colliders = Physics.OverlapSphere(currentCell, gridCellSize / 2, unWalkableLayerMask);
                 if (colliders.Length > 0)
                 {
                     isWalkable = false;
                 }
 
-                //isWalkable = !Physics2D.OverlapCircle(new Vector2(currentCell.x, currentCell.y), (gridCellSize / 2)-0.1f,unWalkableLayerMask);
                 grid[i, j] = new Node(isWalkable,currentCell,i,j);
-
                 currentCell.z += gridCellSize;
             }
             currentCell.x += gridCellSize;

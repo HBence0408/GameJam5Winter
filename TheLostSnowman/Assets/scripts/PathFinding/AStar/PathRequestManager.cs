@@ -9,10 +9,8 @@ using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.UI.CanvasScaler;
 
 public class PathRequestManager : MonoBehaviour
-{
-    
+{   
     [SerializeField] PathFinderGrid grid;
-    //[SerializeField] private int requestProcessedIn1Frame;
     public static PathRequestManager Instance;
 
     private void Awake()
@@ -35,7 +33,6 @@ public class PathRequestManager : MonoBehaviour
 
     public void FindPath(PathRequest pathRequest)
     {
-        Profiler.BeginSample("pathfinding");
         Node startNode = grid.FindNode(pathRequest.PathStart);
         Node targetNode = grid.FindNode(pathRequest.PathEnd);
         List<Vector3> thePath = null;
@@ -43,7 +40,6 @@ public class PathRequestManager : MonoBehaviour
         if (!startNode.Walkable || !targetNode.Walkable )
         {
             PathProcessingFinished(thePath, false,pathRequest);
-            Profiler.EndSample();
             return;
         }
 
@@ -133,17 +129,10 @@ public class PathRequestManager : MonoBehaviour
             newDir = Vector3.Angle(dir2, dir1);
             if (newDir != oldDir)
             {
-                Debug.Log("old vs new " + oldDir + " " + newDir);
-                Debug.Log("left in");
                 waypoints.Add(path[i]);
-            }
-            else{
-                Debug.Log("old vs new " + oldDir + " " + newDir);
-                Debug.Log("left out");
             }
             oldDir = newDir;
         }
-
         return waypoints;
     }
 
