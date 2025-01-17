@@ -22,11 +22,6 @@ public struct SeekerData
         name = unit.name;
     }
 
-    public void DeleteScript()
-    {
-        unitScript = null;
-    }
-
     public void Update()
     {
         if (requestPath)
@@ -40,11 +35,6 @@ public struct SeekerData
         }
     }
 
-    public void TeleportToPosition(Vector3 pos)
-    {
-        unit.position = pos;
-    }
-
     public override bool Equals(object obj)
     {
         if (obj == null)
@@ -56,5 +46,15 @@ public struct SeekerData
             return false;
         }
         return ((SeekerData)obj).unitScript == this.unitScript;
+    }
+
+    public void DeleteScript()
+    {
+        unitScript = null;
+    }
+
+    public void TeleportToPosition(Vector3 pos)
+    {
+        unit.position = pos;
     }
 }
