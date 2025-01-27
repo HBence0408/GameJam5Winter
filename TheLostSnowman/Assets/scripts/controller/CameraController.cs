@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Profiling;
@@ -8,6 +9,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Transform body;
     [SerializeField] private float mouseSensitivity = 10;
     [SerializeField] private float rotX = 0;
+    [SerializeField] private float rotZ = 0;
     [SerializeField] private Transform head;
     [SerializeField] private Transform cameraPivot;
     [SerializeField] private LayerMask collisionLayer;
@@ -32,6 +34,7 @@ public class CameraController : MonoBehaviour
         Vector3 cameraRotation = camera.eulerAngles;
         Vector3 headRotation = head.eulerAngles;
         rotX -= mouseInput.x;
+        rotZ -= mouseInput.x;
 
         if(rotX < -60)
         {
@@ -42,8 +45,18 @@ public class CameraController : MonoBehaviour
             rotX = 60;
         }
 
+        if (rotZ < -40)
+        {
+            rotZ = -40;
+        }
+        if (rotZ > 30)
+        {
+            rotZ = 30;
+        }
+
         cameraRotation.x = rotX;
-        headRotation.z = rotX;
+
+        headRotation.z = rotZ * 0.5f;
 
         camera.eulerAngles = cameraRotation;
         head.eulerAngles = headRotation;
@@ -62,7 +75,7 @@ public class CameraController : MonoBehaviour
         RaycastHit hit;
         Ray ray = new Ray(cameraPivot.position, camera.position - cameraPivot.position);
 
-        if (Physics.Raycast(ray, out hit, Mathf.Abs(targetPos.z), collisionLayer))
+        if (Physics.Raycast(ray, out hit, Mathf.Abs(targetPos.z) + 0.2f, collisionLayer))
         {
             // targetPos.z = -(hit.distance - collisionOffset);
             collisionPoint = hit.point;
@@ -74,10 +87,27 @@ public class CameraController : MonoBehaviour
             Debug.Log("cameera collision at " + hit.point);
             posAltered = true;
         }
+        Vector3 rightSide = new Vector3(0, 0, 1.2f);
+        ray = new Ray(cameraPivot.position, rightSide - cameraPivot.position);
+        if (Physics.Raycast(ray, out hit, Mathf.Abs(targetPos.x) + 0.2f, collisionLayer))
+        {
+            // targetPos.z = -(hit.distance - collisionOffset);
+            collisionPoint = hit.point;
+            float distance = Vector3.Distance(hit.point, cameraPivot.position);
+            float targetX;
+            targetX = -(distance - (collisionOffset - 0.8f));
+            targetPos.x = Mathf.Lerp(camera.localPosition.x, targetX, 5 * Time.deltaTime);
+            camera.localPosition = targetPos;
+            Debug.Log("cameera collision at " + hit.point);
+            posAltered = true;
+        }
 
         if (!posAltered)
         {
-            camera.localPosition = cameraStartPos;
+            targetPos.z = Mathf.Lerp(camera.localPosition.z, cameraStartPos.z, 5 * Time.deltaTime);
+            targetPos.x = Mathf.Lerp(camera.localPosition.x, cameraStartPos.x, 5 * Time.deltaTime);
+            //camera.localPosition = cameraStartPos;
+            camera.localPosition = targetPos;
         }    
     }
 

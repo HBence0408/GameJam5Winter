@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private Transform bottom;
     [SerializeField] private float bottomRotation;
+    [SerializeField] private Animator playerAnimator;
 
     private void Start()
     {
@@ -20,25 +21,32 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         Vector3 movDir2 = new Vector3(0, 0, 0);
-        if (Input.GetAxisRaw("Horizontal") > 0)
+        if (Input.GetKey(KeyCode.D))
         {
             movDir2 += this.transform.right;
         }
-        if (Input.GetAxisRaw("Horizontal") < 0)
+        if (Input.GetKey(KeyCode.A))
         {
             movDir2 += -this.transform.right;
         }
-        if (Input.GetAxisRaw("Vertical") > 0)
+        if (Input.GetKey(KeyCode.W))
         {
             movDir2 += this.transform.forward;
         }
-        if (Input.GetAxisRaw("Vertical") < 0)
+        if (Input.GetKey(KeyCode.S))
         {
             movDir2 += -this.transform.forward;
         }
         movDir2.Normalize();
 
-       
+        if (Input.GetKey(KeyCode.R))
+        {
+            playerAnimator.SetBool("reload", true);
+        }
+        if (Input.GetKey(KeyCode.T))
+        {
+            playerAnimator.SetBool("reload", false);
+        }
 
         if (movDir2 != new Vector3(0,0,0))
         {
