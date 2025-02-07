@@ -12,6 +12,8 @@ public class PathFinderGrid : MonoBehaviour
     [SerializeField] private LayerMask unWalkableLayerMask;
     [SerializeField] private Vector3 bottomLeftCell;
     [SerializeField] private bool showMeTheMatrix;
+    private static PathFinderGrid instance;
+    public static PathFinderGrid Instance { get => instance; }
 
     private Vector3 CalculateBottomLeftCell()
     {
@@ -20,6 +22,14 @@ public class PathFinderGrid : MonoBehaviour
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("multiple grid singletons");
+        }
         GenerateGrid();
     }
 
@@ -78,7 +88,7 @@ public class PathFinderGrid : MonoBehaviour
     {
         try
         {
-            return grid[Mathf.RoundToInt( (point.x - bottomLeftCell.x) / gridCellSize),Mathf.RoundToInt( ((point.z) - bottomLeftCell.z) / gridCellSize)].Clone() as Node;
+            return grid[Mathf.RoundToInt( (point.x - bottomLeftCell.x) /gridCellSize),Mathf.RoundToInt( ((point.z) - bottomLeftCell.z) / gridCellSize)].Clone() as Node;
         }
         catch (Exception)
         {

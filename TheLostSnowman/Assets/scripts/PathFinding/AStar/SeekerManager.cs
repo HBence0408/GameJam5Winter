@@ -12,6 +12,7 @@ public class SeekerManager : MonoBehaviour
     static private SeekerManager instance =  null;
     private const int maxSeekers = 1000;   // pool mérete
     [SerializeField] private GameObject seeker;
+    [SerializeField] private List<GameObject> spawnables = new List<GameObject>();
     public static SeekerManager Instance { get => instance ; private set => instance = value; }
     private ISeeker[] seekers = new ISeeker[maxSeekers];
     private SeekerData[] seekerDatas = new SeekerData[maxSeekers];
@@ -60,6 +61,14 @@ public class SeekerManager : MonoBehaviour
         // object pooling   "objektum medencézés xdddd"
         for (int i = 0; i < maxSeekers; i++)
         {
+            if (i % 2 == 0)
+            {
+                seeker = spawnables[0];
+            }
+            else
+            {
+                seeker = spawnables[1];
+            }
             GameObject go = Instantiate(seeker, this.transform.position, this.transform.rotation);
             go.name = ("seeker" + i).ToString();
             seekers[i] = go.GetComponent<ISeeker>();
@@ -70,10 +79,19 @@ public class SeekerManager : MonoBehaviour
         
     }
     
-    public void AddSeeker(Vector3 posisiton)
+    public void AddSeeker(Vector3 posisiton, int spawnableNum)
     {     // kiveszünk egyet a pool-ból
         int seekerIndex = -10;
-        for (int i = 0; i < maxSeekers; i++)
+        int startNum;
+        if (spawnableNum == 0)
+        {
+            startNum = 0;
+        }
+        else
+        {
+            startNum = 1;
+        }
+        for (int i = startNum; i < maxSeekers; i+=2)
         {
             if (!seekers[i].IsActive())
             {

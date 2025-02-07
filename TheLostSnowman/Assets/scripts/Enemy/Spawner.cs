@@ -9,6 +9,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float spawnRate;
     [SerializeField] private float spawnCounter;
     [SerializeField] private float spawnRadius;
+    [SerializeField] private int spawnableNum;
 
     private void Update()
     {
@@ -29,7 +30,7 @@ public class Spawner : MonoBehaviour
         Vector3 spawnPoint = new Vector3(rndSpawn.x, rndSpawn.y, 0) + this.transform.position;
         //Task spawning = Task.Run(() => SeekerManager.Instance.AddSeeker(spawnPoint));
         Profiler.BeginSample("spawning");
-        SeekerManager.Instance.AddSeeker(spawnPoint);
+        SeekerManager.Instance.AddSeeker(spawnPoint,spawnableNum);
         Profiler.EndSample();
     }
 
