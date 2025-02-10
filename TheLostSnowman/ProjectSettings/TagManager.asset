@@ -8,6 +8,8 @@ TagManager:
   - Nose
   - IceIco
   - Obstackle
+  - RPelvis
+  - LPelvis
   layers:
   - Default
   - TransparentFX

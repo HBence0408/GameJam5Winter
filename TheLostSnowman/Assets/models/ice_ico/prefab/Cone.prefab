@@ -4883,7 +4883,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 91b038ef4d5e02f4995a2510fd94ff66, type: 2}
+  - {fileID: 2100000, guid: b7a97991ec7bf814f8d9f86f03adf4ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5041,7 +5041,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6541ed6e532d5b942adae020e711f397, type: 2}
+  - {fileID: 2100000, guid: 3cb1f19c8b731a146b903e4adb426595, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5078,6 +5078,8 @@ MonoBehaviour:
   target: {fileID: 0}
   rb: {fileID: 4846076051056624959}
   impactEffect: {fileID: 6321544383252197960, guid: ef7a2c145d73a27459882de6021c9804, type: 3}
+  speed: 20
+  lockDistance: 5
 --- !u!54 &4846076051056624959
 Rigidbody:
   m_ObjectHideFlags: 0

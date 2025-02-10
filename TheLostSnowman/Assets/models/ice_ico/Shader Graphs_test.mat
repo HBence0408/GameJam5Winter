@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4570611909436750335
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -8,9 +21,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Shader Graphs_test
-  m_Shader: {fileID: -6465566751694194690, guid: 0839f1761d0ca8640a61847b508ee49d, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
+  m_Shader: {fileID: -6465566751694194690, guid: a3c9fd406487e5e448e28133f32c9a8c, type: 3}
+  m_Parent: {fileID: 2100000, guid: 3cb1f19c8b731a146b903e4adb426595, type: 2}
+  m_ModifiedSerializedProperties: 2
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -24,15 +37,9 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Ints: []
-    m_Floats:
-    - _BUILTIN_QueueControl: 0
-    - _BUILTIN_QueueOffset: 0
-    - _Emmision: 11.12
-    - _metallic: 1
-    - _smoothness: 0.71
+    m_Floats: []
     m_Colors:
-    - _Color: {r: 0.7451335, g: 13.808724, b: 15.813398, a: 0}
-    - _Vector4: {r: 11.27, g: -71.34, b: 279.23, a: 0}
+    - _Color: {r: 0.6052364, g: 11.216167, b: 12.844469, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &3606033094102192919
 MonoBehaviour:

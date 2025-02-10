@@ -7,6 +7,8 @@ public class Missle : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject impactEffect;
+    [SerializeField] private float speed;
+    [SerializeField] private float lockDistance;
     private bool dirLocked = false;
 
 
@@ -33,7 +35,7 @@ public class Missle : MonoBehaviour
         */
         this.transform.SetParent(null);
 
-        if (Vector3.Distance(target.position, this.transform.position) < 5)
+        if (Vector3.Distance(target.position, this.transform.position) < lockDistance)
         {
             dirLocked = true;
         }
@@ -47,7 +49,7 @@ public class Missle : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
         }
 
-        rb.velocity = this.transform.forward * 20;
+        rb.velocity = this.transform.forward * speed;
     }
 
     private void OnCollisionEnter(Collision collision)
