@@ -9,7 +9,8 @@ public class Missle : MonoBehaviour
     [SerializeField] private GameObject impactEffect;
     [SerializeField] private float speed;
     [SerializeField] private float lockDistance;
-    private bool dirLocked = false;
+    [SerializeField] private float RotSpeed;
+     private bool dirLocked = false;
 
 
     private void Awake()
@@ -46,7 +47,7 @@ public class Missle : MonoBehaviour
         if (!dirLocked)
         {
             Quaternion targetRotation = Quaternion.LookRotation(target.position - this.transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, RotSpeed * Time.deltaTime);
         }
 
         rb.velocity = this.transform.forward * speed;

@@ -30,11 +30,19 @@ public class LHandScript : MonoBehaviour
         {
             if (mainScript.CanIceAttack())
             {
-                Attack(this.transform.position + (this.transform.forward * 2));
+                Attack(mainScript.Target.position - (this.transform.forward * 5));
             }
             if (mainScript.CanPutWall())
             {
-                PutWall(wallSpawnPos.position);
+                if (mainScript.State == WichStates.MID_RANGE)
+                {
+                    PutWall(mainScript.Target.position + (this.transform.forward * 5));
+                }
+                else
+                {
+                    PutWall(wallSpawnPos.position);
+                }
+                
             }
         }
 

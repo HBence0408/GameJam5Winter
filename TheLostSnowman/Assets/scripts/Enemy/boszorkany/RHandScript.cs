@@ -34,7 +34,7 @@ public class RHandScript : MonoBehaviour
         Debug.Log(collision);
     }
 
-    private void Shoot()
+    private void Shoot()  // kesobbiekben lehet tobb fajta lovset a witch state alapjan de csak ha van ido
     {
         GameObject m = Instantiate(missle, this.transform.position, missleDir.rotation);
         m.GetComponent<Missle>().SetTarget(target);

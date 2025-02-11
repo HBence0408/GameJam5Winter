@@ -5080,6 +5080,7 @@ MonoBehaviour:
   impactEffect: {fileID: 6321544383252197960, guid: ef7a2c145d73a27459882de6021c9804, type: 3}
   speed: 20
   lockDistance: 5
+  RotSpeed: 5
 --- !u!54 &4846076051056624959
 Rigidbody:
   m_ObjectHideFlags: 0
